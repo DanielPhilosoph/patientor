@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import { apiBaseUrl } from "./constants";
@@ -36,11 +36,9 @@ const App = () => {
     const path = "/" + patient.id;
     return (
       <Route
-        exact
         key={patient.id}
         path={path}
-        ref={path}
-        component={PatientPage}
+        element={<PatientPage patient={patient} />}
       />
     );
   });
@@ -55,12 +53,10 @@ const App = () => {
             Home
           </Button>
           <Divider hidden />
-          <Switch>
-            <Route path="/">
-              <PatientListPage />
-            </Route>
+          <Routes>
+            <Route path="/" element={<PatientListPage />} />
             {routes}
-          </Switch>
+          </Routes>
         </Container>
       </Router>
     </div>

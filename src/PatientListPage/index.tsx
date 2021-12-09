@@ -1,7 +1,7 @@
 import React from "react";
 import axios, { AxiosError } from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
 import AddPatientModal from "../AddPatientModal";
@@ -13,7 +13,7 @@ import { useStateValue } from "../state";
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | undefined>();
 
@@ -42,7 +42,7 @@ const PatientListPage = () => {
   };
 
   const onPatientClick = (patientObj: Patient) => {
-    history.push(`/${patientObj.id}`);
+    navigate(`/${patientObj.id}`);
   };
 
   return (
