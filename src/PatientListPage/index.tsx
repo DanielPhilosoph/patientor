@@ -1,5 +1,5 @@
 import React from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Container, Table, Button } from "semantic-ui-react";
 
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
@@ -31,8 +31,8 @@ const PatientListPage = () => {
       dispatch({ type: "ADD_PATIENT", payload: newPatient });
       closeModal();
     } catch (e) {
-      console.error((e as AxiosError).response?.data || "Unknown Error");
-      setError((e as AxiosError).response?.data?.error || "Unknown error");
+      console.error(e.response?.data || 'Unknown Error');
+      setError(e.response?.data?.error || 'Unknown error');
     }
   };
 
