@@ -1,5 +1,5 @@
 import { Patient, NewPatientType } from "../types";
-import patients from "../../data/patients";
+import patients from "../data/patients";
 
 const getPatients = (): Patient[] => {
   return patients;

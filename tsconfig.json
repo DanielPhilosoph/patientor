@@ -2,8 +2,9 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "ES6",
-    "outDir": "./build/",
-    "module": "commoneJs",
+    "outDir": "./build",
+    "module": "esnext",
+    "baseUrl": "./",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
