@@ -1,5 +1,5 @@
 import { Patient, NewPatientType } from "../types";
-import patients from "../../data/patients";
+import patients from "../data/patients";
 
 const getPatients = (): Patient[] => {
   return patients;
@@ -10,8 +10,6 @@ const getPatient = (id: number): Patient | undefined => {
   if (patient.length === 0) {
     return undefined;
   } else {
-    console.log(patients);
-
     return patient[0];
   }
 };
