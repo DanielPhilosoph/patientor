@@ -9,6 +9,7 @@ const data1 = [
     occupation: "Tel-mond",
     dateOfBirth: "1999-09-05",
     ssn: "YES",
+    entries: [],
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const data1 = [
     occupation: "Tel-mond",
     dateOfBirth: "2001-08-19",
     ssn: "NO",
+    entries: [],
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const data1 = [
     occupation: "Tel-mond",
     dateOfBirth: "2001-12-09",
     ssn: "NO",
+    entries: [],
   },
 ];
 

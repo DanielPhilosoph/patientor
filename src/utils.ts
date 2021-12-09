@@ -4,6 +4,7 @@ import {
   Visibility,
   NewPatientType,
   Gender,
+  Entry,
 } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,7 @@ const toNewPatientFunc = (object: any): NewPatientType => {
     occupation: parseOccupation(object.occupation),
     dateOfBirth: parseDate(object.dateOfBirth),
     ssn: parseSSN(object.ssn),
+    entries: parseEntries(object.entries),
   };
   return newPatient;
 };
@@ -36,6 +38,11 @@ const parseComment = (comment: unknown): string => {
   }
 
   return comment;
+};
+
+// TEMP FUNCTION
+const parseEntries = (entries: unknown): Entry[] => {
+  return entries as Entry[];
 };
 
 const parseName = (name: unknown): string => {
