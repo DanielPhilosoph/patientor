@@ -6,7 +6,7 @@ import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import { apiBaseUrl } from "./constants";
 import { useStateValue, setPatientLis } from "./state";
-import { Patient } from "./types";
+import { Diagnose, Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
 import PatientPage from "./PatientListPage/PatientPage";
@@ -14,8 +14,20 @@ import PatientPage from "./PatientListPage/PatientPage";
 const App = () => {
   const [, dispatch] = useStateValue();
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [diagnoses, setDiagnoses] = useState<Diagnose[]>([]);
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
+
+    const fetchDiagnoses = async () => {
+      try {
+        const { data: dataFromDiagnosesApi } = await axios.get<Diagnose[]>(
+          `${apiBaseUrl}/diagnoses`
+        );
+        setDiagnoses(dataFromDiagnosesApi);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     const fetchPatientList = async () => {
       try {
@@ -23,13 +35,13 @@ const App = () => {
           `${apiBaseUrl}/patients`
         );
         setPatients(patientListFromApi);
-
         dispatch(setPatientLis(patientListFromApi));
       } catch (e) {
         console.error(e);
       }
     };
     void fetchPatientList();
+    void fetchDiagnoses();
   }, [dispatch]);
 
   const routes = patients.map((patient) => {
@@ -38,7 +50,7 @@ const App = () => {
       <Route
         key={patient.id}
         path={path}
-        element={<PatientPage patient={patient} />}
+        element={<PatientPage patient={patient} diagnoses={diagnoses} />}
       />
     );
   });
