@@ -5,6 +5,10 @@ import patientsRouter from "./routers/patient";
 
 const app = express();
 app.use(express.json());
+app.use("/", (_req, res, next) => {
+  res.set("Access-Control-Allow-Headers", "*");
+  next();
+});
 
 const PORT = 3001;
 
