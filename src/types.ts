@@ -87,7 +87,7 @@ interface HospitalEntry extends BaseEntry {
   discharge: Discharge;
 }
 
-type Discharge = {
+export type Discharge = {
   date: string;
   criteria: string;
 };
@@ -98,7 +98,7 @@ interface OccupationalHealthcareEntry extends BaseEntry {
   sickLeave?: SickLeave;
 }
 
-type SickLeave = {
+export type SickLeave = {
   startDate: string;
   endDate: string;
 };

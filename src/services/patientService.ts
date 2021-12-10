@@ -1,4 +1,4 @@
-import { Patient, NewPatientType } from "../types";
+import { Patient, NewPatientType, Entry } from "../types";
 import patients from "../data/patients";
 import uniqId from "uniqid";
 
@@ -13,6 +13,17 @@ const getPatient = (id: string): Patient | undefined => {
   } else {
     return patient[0];
   }
+};
+
+const addEntry = (id: string, entry: Entry): boolean => {
+  let flag = false;
+  patients.forEach((patient) => {
+    if (patient.id === id) {
+      patient.entries?.push(entry);
+      flag = true;
+    }
+  });
+  return flag;
 };
 
 function getId(): string {
@@ -31,4 +42,4 @@ const addPatient = (patient: NewPatientType): Patient => {
   return newPatientObj;
 };
 
-export default { getPatients, addPatient, getPatient };
+export default { getPatients, addPatient, getPatient, getId, addEntry };
