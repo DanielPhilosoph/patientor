@@ -12,7 +12,7 @@ router.get("/", (_req, res) => {
 router.post("/:id/entries", (req, res) => {
   const patient = patients.getPatient(req.params.id);
   if (patient) {
-    const entry: Entry = toNew.toEntry(req.body.entry);
+    const entry: Entry = toNew.toEntry(req.body);
     if (patients.addEntry(req.params.id, entry)) {
       res.send("success");
     } else {

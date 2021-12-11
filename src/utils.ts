@@ -90,7 +90,11 @@ const toEntry = (entry: any): Entry => {
 };
 
 const parseSickLeave = (sickLeave: unknown): SickLeave => {
-  if (isSickLeave(sickLeave)) {
+  if (
+    isSickLeave(sickLeave) &&
+    isDate(sickLeave.startDate) &&
+    isDate(sickLeave.endDate)
+  ) {
     return sickLeave;
   } else {
     throw new Error("Incorrect or missing sickLeave");
@@ -130,7 +134,11 @@ function isHealthCheckRating(rating: any): rating is HealthCheckRating {
 const parseDischarge = (discharge: unknown): Discharge => {
   if (discharge && typeof discharge === "object") {
     if (isDischarge(discharge)) {
-      if (isString(discharge.date) && isString(discharge.criteria)) {
+      if (
+        isString(discharge.date) &&
+        isDate(discharge.date) &&
+        isString(discharge.criteria)
+      ) {
         return discharge;
       } else {
         throw new Error("Incorrect or missing discharge");
