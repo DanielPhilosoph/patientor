@@ -2,7 +2,6 @@
 import axios, { AxiosError } from "axios";
 
 import { Dispatch, SetStateAction } from "react";
-import { isString } from "util";
 import { apiBaseUrl } from "../constants";
 import diagnoses from "../data/diagnoses";
 import { Action, setPatientLis } from "../state";
@@ -38,9 +37,7 @@ const PatientPage = (props: pageType) => {
           type: "Hospital",
           date: values.date,
           description: values.description,
-          diagnosisCodes: [
-            isString(values.diagnosisCodes) ? values.diagnosisCodes : "",
-          ],
+          diagnosisCodes: values.diagnosisCodes,
           specialist: values.specialist,
           discharge: parseDischarge(values.discharge),
         };
@@ -53,11 +50,7 @@ const PatientPage = (props: pageType) => {
           type: "HealthCheck",
           date: values.date,
           description: values.description,
-          diagnosisCodes: [
-            typeof values.diagnosisCodes === "string"
-              ? values.diagnosisCodes
-              : "",
-          ],
+          diagnosisCodes: values.diagnosisCodes,
           specialist: values.specialist,
           healthCheckRating: values.healthCheckRating,
         };
@@ -67,9 +60,7 @@ const PatientPage = (props: pageType) => {
           type: "OccupationalHealthcare",
           date: values.date,
           description: values.description,
-          diagnosisCodes: [
-            isString(values.diagnosisCodes) ? values.diagnosisCodes : "",
-          ],
+          diagnosisCodes: values.diagnosisCodes,
           specialist: values.specialist,
           employerName: values.employerName,
           sickLeave: values.sickLeave,

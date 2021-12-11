@@ -6,8 +6,9 @@ import {
   TextField,
   SelectField,
   TypeOptions,
-  DiagnosisCodeOptions,
+  //DiagnosisCodeOptions,
   NumberField,
+  DiagnosisSelection,
 } from "../AddPatientModal/FormField";
 import {
   Diagnose,
@@ -16,7 +17,7 @@ import {
   HospitalEntry,
   OccupationalHealthcareEntry,
 } from "../types";
-import { parseDiagnoseCodes, parseName } from "../utils";
+//import { parseDiagnoseCodes, parseName } from "../utils";
 
 /*
  * use type Patient, but omit id and entries,
@@ -41,21 +42,21 @@ const typeOptions: TypeOptions[] = [
 ];
 
 export const AddEntryForm = ({ onSubmit, diagnoses }: Props) => {
-  const diagnosisCodes = (): DiagnosisCodeOptions[] => {
-    if (diagnoses.length === 0) {
-      return [{ value: "None", label: "None" }];
-    }
-    return diagnoses.map((diagnose) => {
-      const code: string[] = parseDiagnoseCodes([diagnose.code]);
-      const name: string = parseName(diagnose.name);
-      const option: DiagnosisCodeOptions = {
-        value: code[0],
-        label: name,
-      };
-      return option;
-    });
-  };
-  const diagnosisCodesOptions = diagnosisCodes();
+  //   const diagnosisCodes = (): DiagnosisCodeOptions[] => {
+  //     if (diagnoses.length === 0) {
+  //       return [{ value: "None", label: "None" }];
+  //     }
+  //     return diagnoses.map((diagnose) => {
+  //       const code: string[] = parseDiagnoseCodes([diagnose.code]);
+  //       const name: string = parseName(diagnose.name);
+  //       const option: DiagnosisCodeOptions = {
+  //         value: code[0],
+  //         label: name,
+  //       };
+  //       return option;
+  //     });
+  //   };
+  //const diagnosisCodesOptions = diagnosisCodes();
 
   return (
     <Formik
@@ -96,6 +97,9 @@ export const AddEntryForm = ({ onSubmit, diagnoses }: Props) => {
         if (!values.description) {
           errors.description = requiredError;
         }
+        if (!values.diagnosisCodes || values.diagnosisCodes.length === 0) {
+          errors.diagnosisCodes = requiredError;
+        }
         if (values.type === "Hospital") {
           if (!values.discharge.criteria) {
             errors["discharge.criteria"] = requiredError;
@@ -130,7 +134,7 @@ export const AddEntryForm = ({ onSubmit, diagnoses }: Props) => {
         return errors;
       }}
     >
-      {({ isValid, dirty }) => {
+      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form ui">
             <SelectField label="Entry type" name="type" options={typeOptions} />
@@ -152,10 +156,15 @@ export const AddEntryForm = ({ onSubmit, diagnoses }: Props) => {
               name="description"
               component={TextField}
             />
-            <SelectField
+            {/* <SelectField
               label="Diagnosis codes"
               name="diagnosisCodes"
               options={diagnosisCodesOptions}
+            /> */}
+            <DiagnosisSelection
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              diagnoses={Object.values(diagnoses)}
             />
             <Field
               label="*Hospital* discharge date"
@@ -169,7 +178,6 @@ export const AddEntryForm = ({ onSubmit, diagnoses }: Props) => {
               name="discharge.criteria"
               component={TextField}
             />
-
             <Field
               label="*Occupational Healthcare* Employer name"
               placeholder="Name"
