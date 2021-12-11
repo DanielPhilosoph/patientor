@@ -50,11 +50,18 @@ const App = () => {
       <Route
         key={patient.id}
         path={path}
-        element={<PatientPage patient={patient} diagnoses={diagnoses} />}
+        element={
+          <PatientPage
+            patient={patient}
+            diagnoses={diagnoses}
+            setPatients={setPatients}
+            patients={patients}
+            dispatch={dispatch}
+          />
+        }
       />
     );
   });
-  console.log(routes);
 
   return (
     <div className="App">

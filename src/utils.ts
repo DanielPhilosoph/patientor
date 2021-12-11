@@ -110,6 +110,14 @@ function isSickLeave(sickLeave: any): sickLeave is SickLeave {
   );
 }
 
+export const parseCriteria = (criteria: unknown): string => {
+  if (isString(criteria)) {
+    return criteria;
+  } else {
+    throw new Error("Incorrect or missing criteria");
+  }
+};
+
 const parseEmployerName = (employerName: unknown): string => {
   if (isString(employerName)) {
     return employerName;
@@ -131,7 +139,7 @@ function isHealthCheckRating(rating: any): rating is HealthCheckRating {
   return Object.values(HealthCheckRating).includes(rating);
 }
 
-const parseDischarge = (discharge: unknown): Discharge => {
+export const parseDischarge = (discharge: unknown): Discharge => {
   if (discharge && typeof discharge === "object") {
     if (isDischarge(discharge)) {
       if (
@@ -151,6 +159,7 @@ const parseDischarge = (discharge: unknown): Discharge => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isDischarge(discharge: any): discharge is Discharge {
   return "date" in discharge && "criteria" in discharge;
 }
@@ -170,7 +179,7 @@ const parseType = (
   }
 };
 
-const parseDiagnoseCodes = (
+export const parseDiagnoseCodes = (
   diagnosesArray: unknown
 ): Array<Diagnosis["code"]> => {
   if (isArrayOfDiagnosisCodes(diagnosesArray)) {
@@ -181,6 +190,7 @@ const parseDiagnoseCodes = (
 };
 
 function isArrayOfDiagnosisCodes(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   array: any
 ): array is Array<Diagnosis["code"]> {
   const diagnoseCodes: string[] = diagnoses.map((elem) => {
@@ -201,6 +211,7 @@ function isArrayOfDiagnosisCodes(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isArrayStringArray = (array: Array<any>): array is string[] => {
   let flag = true;
   array.forEach((element) => {
@@ -232,7 +243,7 @@ const parseEntries = (entries: unknown): Entry[] => {
   return entries as Entry[];
 };
 
-const parseName = (name: unknown): string => {
+export const parseName = (name: unknown): string => {
   if (!name || !isString(name)) {
     throw new Error("Incorrect or missing name");
   }
@@ -264,7 +275,7 @@ const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date));
 };
 
-const parseDate = (date: unknown): string => {
+export const parseDate = (date: unknown): string => {
   if (!date || !isString(date) || !isDate(date)) {
     throw new Error("Incorrect or missing date: " + date);
   }
